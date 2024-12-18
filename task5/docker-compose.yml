@@ -1,0 +1,27 @@
+#configuration back-end
+
+services: 
+  backend: 
+    build: 
+      dockerfile: Dockerfile
+      context: ./back-end
+    image: softy-pinko-back-end:task4
+
+#configuration front-end
+  frontend:
+   build:
+    context: ./front-end
+    dockerfile: Dockerfile
+   image: softy-pinko-front-end:task4
+
+#configuration proxy(nginx)
+  proxy:
+    build:
+      context: ./proxy
+      dockerfile : Dockerfile
+    image: task5-proxy
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - backend 
