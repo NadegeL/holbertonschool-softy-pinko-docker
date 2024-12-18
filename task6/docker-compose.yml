@@ -1,0 +1,37 @@
+networks:
+  app-network:
+    driver: bridge
+
+#configuration back-end
+services: 
+  back-end: 
+    build: 
+      dockerfile: Dockerfile
+      context: ./api
+    image: softy-pinko-back-end:task4
+    networks:
+      - app-network
+    ports:
+      - "5252-5253:5252"
+#configuration front-end
+  frontend:
+   build:
+    context: ./front-end
+    dockerfile: Dockerfile
+   image: softy-pinko-front-end:task4
+   networks:
+    - app-network
+
+#configuration proxy(nginx)
+  proxy:
+    build:
+      context: ./proxy
+      dockerfile : Dockerfile
+    image: task5-proxy
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - back-end
+    networks:
+      - app-network
