@@ -1,2 +1,2 @@
-docker-compose up --scale back-end=2
+docker-compose up --scale backend=2
 //démarre 2instances backend
